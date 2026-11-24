@@ -1,67 +1,73 @@
-//Ejercicio 2 
-   //PREGUNTA 2 
-        public void Ejercicio2()
+  public void Ejercicio2()
         {
-            int f1, c1, f2, c2, i, j, n, aux;
+            int p, q, f1, c1, f2, c2;
+            int frec1, frec2, aux;
+            bool ban;
 
-            n = c * (c - 1) / 2;
-
-            for (i = 1; i < n; i++)
+            for (p = 1; p <= 10; p++)
             {
-                f1 = 1;
-                c1 = 2;
+                PosTriangular(p, out f1, out c1);
 
-                for (j = 1; j <= n - i; j++)
+                for (q = p + 1; q <= 10; q++)
                 {
-                    f2 = f1;
-                    c2 = c1;
+                    PosTriangular(q, out f2, out c2);
 
-                    Siguiente(ref f2, ref c2);
+                    frec1 = FrecTriangular(x[f1, c1]);
+                    frec2 = FrecTriangular(x[f2, c2]);
 
-                    if (Frecuencia(x[f1, c1]) < Frecuencia(x[f2, c2]))
+                    ban = false;
+
+                    if (frec1 < frec2)
+                        ban = true;
+
+                    if (frec1 == frec2 && x[f1, c1] > x[f2, c2])
+                        ban = true;
+
+                    if (ban)
                     {
                         aux = x[f1, c1];
                         x[f1, c1] = x[f2, c2];
                         x[f2, c2] = aux;
                     }
-
-                    f1 = f2;
-                    c1 = c2;
                 }
             }
         }
 
-
-        private int Frecuencia(int elem)
+        public void PosTriangular(int pos, out int fi, out int co)
         {
-            int f1, c1, cont;
+            int k;
 
-            cont = 0;
+            k = 0;
+            fi = 0;
+            co = 0;
 
-            for (c1 = 2; c1 <= c; c1++)
+            for (int j = 1; j < c; j++)
             {
-                for (f1 = 1; f1 < c1; f1++)
+                for (int i = f - j; i >= 1; i--)
                 {
-                    if (x[f1, c1] == elem)
+                    k++;
+
+                    if (k == pos)
                     {
-                        cont++;
+                        fi = i;
+                        co = j;
                     }
+                }
+            }
+        }
+
+        public int FrecTriangular(int ele)
+        {
+            int cont = 0;
+
+            for (int j = 1; j < c; j++)
+            {
+                for (int i = 1; i <= f - j; i++)
+                {
+                    if (x[i, j] == ele)
+                        cont++;
                 }
             }
 
             return cont;
-        }
-
-        
-        private void Siguiente(ref int fila, ref int col)
-        {
-            if (fila > 1)
-            {
-                fila--;
-            }
-            else
-            {
-                col++;
-                fila = col - 1;
-            }
         }
