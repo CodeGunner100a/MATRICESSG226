@@ -1,62 +1,66 @@
- // PREGUNTA 1 repecheje sb
-
+     //ejercicio 1 repe si miercoles
         public void Ejercicio1(int fi, int ff, int ci, int cf)
         {
-            bool ban = true;int f1, f2, inicioF2;
-            for (int c1 = ci; c1 <= cf; c1++)
+            int f1, c1, f2, c2, i, j, n;
+
+            n = (ff - fi + 1) * (cf - ci + 1);
+
+            
+            for (i = 1; i < n; i++)
             {
-                if (ban == false)
-                {
-                    for (f1 = fi; f1 <= ff; f1++)
-                    {
-                        for (int c2 = c1; c2 <= cf; c2++)
-                        {
-                            if (c2 == c1)
-                                inicioF2 = f1;
-                            else
-                                inicioF2 = fi;
+                f1 = fi;
+                c1 = ci;
 
-                            for (f2 = inicioF2; f2 <= ff; f2++)
-                            {
-                                if (x[f1, c1] > x[f2, c2])
-                                    Intercambiar(f1, c1, f2, c2);
-                            }
-                        }
-                    }
-                }
-                else
+                for (j = 1; j <= n - i; j++)
                 {
-                    for (f1 = ff; f1 >= fi; f1--)
-                    {
-                        for (int c2 = c1; c2 <= cf; c2++)
-                        {
-                            if (c2 == c1)
-                                inicioF2 = f1;
-                            else
-                                inicioF2 = ff;
+                    f2 = f1;
+                    c2 = c1;
 
-                            for (f2 = inicioF2; f2 >= fi; f2--)
-                            {
-                                if (x[f1, c1] > x[f2, c2])
-                                    Intercambiar(f1, c1, f2, c2);
-                            }
-                        }
+                    SiguienteSenoidal(ref f2, ref c2, fi, ff, ci, cf);
+
+                    if (x[f1, c1] > x[f2, c2])
+                    {
+                        intercambiar(f1, c1, f2, c2);
                     }
+
+                    f1 = f2;
+                    c1 = c2;
                 }
-                ban = !ban;
             }
         }
 
-        public void Intercambiar(int f1, int c1, int f2, int c2)
+        private void SiguienteSenoidal(ref int fila, ref int col,
+            int fi, int ff, int ci, int cf)
         {
-            int aux = x[f1, c1];
+            if ((fila - fi) % 2 == 0)
+            {
+                if (col < cf)
+                {
+                    col++;
+                }
+                else
+                {
+                    fila++;
+                }
+            }
+            else
+            {
+                if (col > ci)
+                {
+                    col--;
+                }
+                else
+                {
+                    fila++;
+                }
+            }
+        }
+
+        private void intercambiar(int f1, int c1, int f2, int c2)
+        {
+            int aux;
+
+            aux = x[f1, c1];
             x[f1, c1] = x[f2, c2];
             x[f2, c2] = aux;
         }
-
-
-
-
-
-
-
